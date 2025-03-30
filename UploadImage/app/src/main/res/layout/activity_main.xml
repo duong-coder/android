@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_black2"
+    tools:context=".MainActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Image Upload Menu"
+        android:textSize="50px"
+        android:textColor="#d3d8e3"
+        android:layout_alignParentTop = "true"
+        android:layout_centerHorizontal = "true"
+        android:layout_marginTop="50dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/round_button"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:text="CONNETC SERVER"
+        android:onClick="ConnectServer"
+        android:textColor="@color/element_white"
+        android:textSize="20dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="270dp"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/round_button"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:text="GET IMAGE BY NAME"
+        android:textColor="@color/element_white"
+        android:textSize="20dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="340dp"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/round_button"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:onClick="Upload"
+        android:text="UPLOAD IMAGE"
+        android:textColor="@color/element_white"
+        android:textSize="20dp" />
+
+</RelativeLayout>
