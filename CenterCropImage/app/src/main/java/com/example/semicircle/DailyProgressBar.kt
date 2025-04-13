@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.core.view.marginBottom
 import com.example.centercropimage.R
@@ -35,6 +36,8 @@ class DailyProgressBar : View {
     private val progressQuarterOfHeight = MyUtils.dpToPx(4f, resources)
     // 8f is margin, 8f is 1/2 of progressHeight
     private val progressMarginHorizontal = MyUtils.dpToPx(8f + 8f, resources)
+    private val marginHorizontal = MyUtils.dpToPx(8f, resources)
+    private val paddingTop = MyUtils.dpToPx(24f, resources)
 
     private val progressPaint = Paint().apply {
         color = resources.getColor(R.color.yellow, null)
@@ -69,16 +72,22 @@ class DailyProgressBar : View {
         super.onDraw(canvas)
 
         // cut around circle
-        val spaceHorizontal = (1 + cos(START_ANGEL_RADIAN)) * width/2 - progressMarginHorizontal
-        val spaceTop = height - (1 + sin(START_ANGEL_RADIAN)) * width/2 + spaceHorizontal - progressHalfOfHeight - progressQuarterOfHeight
+        val spaceHorizontal = (1 + cos(START_ANGEL_RADIAN)) * width/2 - marginHorizontal
+        val spaceHorizontalWidthProgress = spaceHorizontal - progressHalfOfHeight
+        val spaceTop = progressHalfOfHeight + paddingTop
 
         // float left, float top, float right, float bottom
         val rectFWillDraw = RectF(
-            0f - spaceHorizontal,
-            0f - spaceHorizontal + spaceTop,
-            width.toFloat() + spaceHorizontal,
-            width.toFloat() + spaceHorizontal + spaceTop
+            0f - spaceHorizontalWidthProgress,
+            0f + spaceTop,
+            width.toFloat() + spaceHorizontalWidthProgress,
+            width.toFloat() + spaceHorizontalWidthProgress*2 + spaceTop
         )
+
+        val centerX = rectFWillDraw.centerX()
+        val centerY = rectFWillDraw.centerY()
+        Log.d("zzzd", "centerX $centerX centerY $centerY")
+        Log.d("zzzd", "width/2 ${width/2} height/2 ${height/2}")
 
         // draw background
         canvas.drawArc(rectFWillDraw, START_ANGEL, SWEEP_ANGEL, false, progressBackgroundPaint)
@@ -89,30 +98,20 @@ class DailyProgressBar : View {
         canvas.drawArc(rectFWillDraw, START_ANGEL, angelByProgressValue, false, progressPaint)
 
         if (progressValue == 0f) {
-            val topValue = (1 + sin(START_ANGEL_RADIAN)) * width/2 + spaceTop  - progressHalfOfHeight
-            val leftValue = (1 + cos(START_ANGEL_RADIAN)) * width/2 - progressQuarterOfHeight
-
             onAnimationStart.invoke(
-                topValue,
-                leftValue
-            )
-        } else  if (progressValue == 20f) {
-            val endAngelRadian = Math.toRadians((START_ANGEL + angelByProgressValue).toDouble()).toFloat()
-            val topValue = (1 + sin(endAngelRadian)) * width/2 + spaceTop  - progressHalfOfHeight
-            val leftValue = (1 + cos(endAngelRadian)) * width/2 - progressQuarterOfHeight
-//            onAnimationEnd.invoke(
-//                topValue,
-//                leftValue
-//            )
-        } else {
-            val endAngelRadian = Math.toRadians((START_ANGEL + angelByProgressValue).toDouble()).toFloat()
-            val topValue = (1 + sin(endAngelRadian)) * width/2 + spaceTop  - progressHalfOfHeight
-            val leftValue = (1 + cos(endAngelRadian)) * width/2 - progressQuarterOfHeight
-            onAnimation.invoke(
-                topValue,
-                leftValue
+                0f,
+                0f
             )
         }
+
+        val endAngelRadian = Math.toRadians((START_ANGEL + angelByProgressValue).toDouble()).toFloat()
+
+        val topValue = (1 + sin(endAngelRadian)) * (centerX + spaceHorizontalWidthProgress) + spaceTop
+        val leftValue = (1 + cos(endAngelRadian)) * (centerX + spaceHorizontalWidthProgress) - progressHalfOfHeight
+        onAnimation.invoke(
+            topValue,
+            leftValue
+        )
 
     }
 

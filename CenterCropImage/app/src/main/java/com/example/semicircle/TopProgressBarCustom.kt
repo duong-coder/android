@@ -39,19 +39,19 @@ class TopProgressBarCustom : FrameLayout {
         addView(binding.root)
 
         // set image
-        binding.imageProgress.setImageResource(R.drawable.center_crop_bg)
+//        binding.imageProgress.setImageResource(R.drawable.center_crop_bg)
 
         // add event
         binding.dailyProgressBar.onAnimationStart = { topValue, leftValue ->
-            binding.imageProgress.x = leftValue - halfOfImageSize
-            binding.imageProgress.y = topValue - imageSize + imageMarginTop
+//            binding.imageProgress.x = leftValue
+//            binding.imageProgress.y = topValue
             binding.imageProgress.visibility = VISIBLE
         }
         binding.dailyProgressBar.onAnimation = { topValue, leftValue ->
 //            binding.imageProgress.translationX = leftValue
 //            binding.imageProgress.translationY = topValue
-            binding.imageProgress.x = leftValue - halfOfImageSize
-            binding.imageProgress.y = topValue - imageSize + imageMarginTop
+            binding.imageProgress.x = leftValue
+            binding.imageProgress.y = topValue
 //            binding.imageProgress.animate()
 //                .x(leftValue)
 //                .y(leftValue)
@@ -73,7 +73,7 @@ class TopProgressBarCustom : FrameLayout {
     }
 
     fun initData() {
-        startAnimationDailyProgressBar(50f)
+        startAnimationDailyProgressBar(100f)
     }
 
     fun startAnimationDailyProgressBar(progressValue : Float){
